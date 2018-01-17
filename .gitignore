@@ -5,9 +5,6 @@ lt application files
 # Files for the ART/Dalvik VM
 *.dex
 
-# Java class files
-*.class
-
 # Generated files
 bin/
 gen/
@@ -34,6 +31,7 @@ captures/
 
 # IntelliJ
 *.iml
+.idea/
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
