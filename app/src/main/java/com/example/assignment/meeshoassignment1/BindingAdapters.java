@@ -1,11 +1,10 @@
 package com.example.assignment.meeshoassignment1;
 
 import android.databinding.BindingAdapter;
-import android.databinding.InverseBindingAdapter;
 import android.support.v7.widget.RecyclerView;
-import android.widget.EditText;
 
 import com.example.assignment.meeshoassignment1.data.PullRequest;
+import com.example.assignment.meeshoassignment1.pullrequest.PullRequestsListAdapter;
 
 import java.util.List;
 

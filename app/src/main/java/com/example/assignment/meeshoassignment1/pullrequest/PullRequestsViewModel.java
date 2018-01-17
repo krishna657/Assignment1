@@ -1,4 +1,4 @@
-package com.example.assignment.meeshoassignment1;
+package com.example.assignment.meeshoassignment1.pullrequest;
 
 import android.content.Context;
 import android.databinding.ObservableArrayList;
@@ -6,11 +6,13 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
+import com.example.assignment.meeshoassignment1.BaseViewModel;
+import com.example.assignment.meeshoassignment1.R;
+import com.example.assignment.meeshoassignment1.Source;
 import com.example.assignment.meeshoassignment1.data.PullRequest;
 
 import java.util.List;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;

@@ -3,6 +3,8 @@
     <string name="pull_requests_hint">Square/retrofit</string>
     <string name="pull_request_title">Handle 100 (Continue) HTTP response gracefully regardless of whether it was requested/expected </string>
     <string name="pull_request_number">#3766</string>
+    <string name="pull_request_updated">updated on 15 Nov 2017</string>
+    <string name="updated_on">Updated on</string>
     <string name="error_edit_text_insert">Please insert text in given format</string>
     <string name="network_error">Please connect to internet and try again</string>
     <string name="pull_requests_zero">There are no open pull requests in given repo</string>

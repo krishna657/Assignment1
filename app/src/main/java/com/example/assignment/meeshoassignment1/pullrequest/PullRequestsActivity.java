@@ -1,16 +1,16 @@
-package com.example.assignment.meeshoassignment1;
+package com.example.assignment.meeshoassignment1.pullrequest;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -18,18 +18,20 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.assignment.meeshoassignment1.Injection;
+import com.example.assignment.meeshoassignment1.R;
+import com.example.assignment.meeshoassignment1.Source;
+import com.example.assignment.meeshoassignment1.ViewModelHolder;
 import com.example.assignment.meeshoassignment1.data.PullRequest;
 import com.example.assignment.meeshoassignment1.databinding.ActivityMainBinding;
+import com.example.assignment.meeshoassignment1.pullrequest.PullRequestsListAdapter;
+import com.example.assignment.meeshoassignment1.pullrequest.PullRequestsViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+public class PullRequestsActivity extends AppCompatActivity {
+    public static final String PULL_REQUESTS_VIEWMODEL = "pulls_view_model";
 
-public class MainActivity extends AppCompatActivity {
     private PullRequestsViewModel pullRequestsViewModel;
     private ActivityMainBinding binding;
     private Observable.OnPropertyChangedCallback snackBarCallBack;
@@ -38,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        Source source = Injection.getSourceForPullRequests();
-        pullRequestsViewModel = new PullRequestsViewModel(source, getApplicationContext());
+        pullRequestsViewModel = findOrCreateViewModel();
         binding.setPullsViewModel(pullRequestsViewModel);
         final EditText etUserRepo = binding.userRepo;
         etUserRepo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     pullRequestsViewModel.getPullRequests(etUserRepo.getText().toString());
                     hideKeyBoard(v);
+                    etUserRepo.clearFocus();
                     return true;
                 }
                 return false;
@@ -56,6 +58,27 @@ public class MainActivity extends AppCompatActivity {
         setUpSnackBarCallBack();
         setUpRecyclerView();
         pullRequestsViewModel.onCreate();
+    }
+
+    private PullRequestsViewModel findOrCreateViewModel() {
+        ViewModelHolder<PullRequestsViewModel> retainedViewModel =
+                (ViewModelHolder<PullRequestsViewModel>) getSupportFragmentManager()
+                        .findFragmentByTag(PULL_REQUESTS_VIEWMODEL);
+
+        if (retainedViewModel != null && retainedViewModel.getViewmodel() != null) {
+            return retainedViewModel.getViewmodel();
+        } else {
+            Source source = Injection.getSourceForPullRequests();
+
+            PullRequestsViewModel viewModel = new PullRequestsViewModel(
+                    source,
+                    getApplicationContext());
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(ViewModelHolder.createContainer(viewModel), PULL_REQUESTS_VIEWMODEL);
+            transaction.commit();
+            return viewModel;
+        }
     }
 
     private void hideKeyBoard(View v) {

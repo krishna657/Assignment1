@@ -1,10 +1,11 @@
-package com.example.assignment.meeshoassignment1;
+package com.example.assignment.meeshoassignment1.pullrequest;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.example.assignment.meeshoassignment1.R;
 import com.example.assignment.meeshoassignment1.data.PullRequest;
 import com.example.assignment.meeshoassignment1.databinding.PullItemViewBinding;
 
